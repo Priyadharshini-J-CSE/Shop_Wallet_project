@@ -1,0 +1,142 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Premium Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="{% url 'home' %}" class="logo">
+            <i class="fas fa-store"></i>
+           ShopWallet
+        </a>
+        </div>
+    </nav>
+
+    <!-- Login Container -->
+    <div class="payment-container">
+        <h2 class="payment-title">Welcome Back</h2>
+
+        <!-- Display Django Messages -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message {{ message.tags }}">
+                    <i class="fas fa-{% if message.tags == 'success' %}check-circle{% elif message.tags == 'error' %}exclamation-circle{% else %}info-circle{% endif %}"></i>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <!-- Login Form -->
+        <form class="payment-form" id="loginForm" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_username">
+                    <i class="fas fa-envelope"></i>
+                    Username
+                </label>
+                <input type="text" id="id_username" name="username" required placeholder="Enter your username" value="{{ form.username.value|default:'' }}">
+                {% if form.username.errors %}
+                    <div class="message error">
+                        <i class="fas fa-exclamation-circle"></i>
+                        {{ form.username.errors.0 }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="id_password">
+                    <i class="fas fa-lock"></i>
+                    Password
+                </label>
+                <input type="password" id="id_password" name="password" required placeholder="Enter your password">
+                {% if form.password.errors %}
+                    <div class="message error">
+                        <i class="fas fa-exclamation-circle"></i>
+                        {{ form.password.errors.0 }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label style="display: flex; align-items: center; gap: 10px; font-weight: 500;">
+                    <input type="checkbox" id="remember" name="remember" style="width: auto; margin: 0;">
+                    Remember me
+                </label>
+            </div>
+
+            {% if form.non_field_errors %}
+                <div class="message error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    {{ form.non_field_errors.0 }}
+                </div>
+            {% endif %}
+
+            <button type="submit" class="payment-button">
+                <i class="fas fa-sign-in-alt"></i>
+                Sign In
+            </button>
+
+            <div class="payment-security">
+                <i class="fas fa-shield-alt"></i>
+                Your information is secure and encrypted
+            </div>
+        </form>
+
+        <!-- Additional Options -->
+        <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(42, 157, 143, 0.1);">
+            <p style="margin-bottom: 15px; color: var(--text-light);">
+                <a href="{% url 'password_reset' %}" style="color: var(--primary); text-decoration: none; font-weight: 600;">
+                    Forgot your password?
+                </a>
+            </p>
+            <p style="color: var(--text-light);">
+                Don't have an account?
+                <a href="{% url 'register' %}" style="color: var(--accent); text-decoration: none; font-weight: 600;">
+                    Sign up here
+                </a>
+            </p>
+        </div>
+
+        <!-- Social Login -->
+        <div style="margin-top: 30px;">
+            <div style="text-align: center; margin-bottom: 20px; position: relative;">
+                <span style="background: white; padding: 0 20px; color: var(--text-light); font-size: 0.9rem;">Or continue with</span>
+                <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: rgba(42, 157, 143, 0.1); z-index: -1;"></div>
+            </div>
+
+            <div style="display: flex; gap: 15px;">
+                <button type="button" class="btn btn-secondary" style="flex: 1; background: #4285f4; border: none;">
+                    <i class="fab fa-google"></i>
+                    Google
+                </button>
+                <button type="button" class="btn btn-secondary" style="flex: 1; background: #1877f2; border: none;">
+                    <i class="fab fa-facebook-f"></i>
+                    Facebook
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add floating label effect
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('focused');
+            });
+
+            input.addEventListener('blur', function() {
+                if (!this.value) {
+                    this.parentElement.classList.remove('focused');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
