@@ -1,0 +1,104 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopWallet - Home</title>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="/" class="logo">
+            <i class="fas fa-wallet"></i> ShopWallet
+        </a>
+        <div class="nav-links">
+            <a href="{% url 'index' %}">Home</a>
+            <a href="#products">Products</a>
+            <a href="{% url 'mongodb_dashboard' %}" title="MongoDB Dashboard">
+                <i class="fas fa-database"></i>
+            </a>
+            <a href="{% url 'cart' %}" class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cart-count">{{ request.session.cart|length|default:0 }}</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="container">
+            <h1>Shop Smart with ShopWallet</h1>
+            <p>Experience seamless shopping with our integrated wallet system. Add funds, shop products, and checkout in seconds!</p>
+            <a href="#products" class="btn">Shop Now</a>
+            <a href="{% url 'pay' %}" class="btn btn-secondary">Manage Wallet</a>
+        </div>
+    </div>
+
+    <!-- Products Section -->
+    <div class="container" id="products">
+        <h2 class="section-title">Featured Products</h2>
+        <div class="products">
+            <div class="product" data-id="1" data-name="Premium T-Shirt" data-price="15">
+                <div class="product-img-container">
+                    <img src="{% static 'images/i8.avif' %}" alt="Premium T-Shirt">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Premium T-Shirt</h3>
+                    <p class="product-price">$15.00</p>
+                    <button onclick="addToCart(1)">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product" data-id="2" data-name="Running Shoes" data-price="40">
+                <div class="product-img-container">
+                    <img src="{% static 'images/shoes.jpg' %}" alt="Running Shoes">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Running Shoes</h3>
+                    <p class="product-price">$40.00</p>
+                    <button onclick="addToCart(2)">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product" data-id="3" data-name="Smart Watch" data-price="120">
+                <div class="product-img-container">
+                    <img src="{% static 'images/watch.jpg' %}" alt="Smart Watch">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Smart Watch</h3>
+                    <p class="product-price">$120.00</p>
+                    <button onclick="addToCart(3)">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product" data-id="4" data-name="Wireless Earbuds" data-price="80">
+                <div class="product-img-container">
+                    <img src="{% static 'images/i1.avif' %}" alt="Wireless Earbuds">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Wireless Earbuds</h3>
+                    <p class="product-price">$80.00</p>
+                    <button onclick="addToCart(4)">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+
+        <a href="{% url 'cart' %}" class="view-cart-btn">
+            <i class="fas fa-shopping-cart"></i> View Cart
+        </a>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 ShopWallet. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
